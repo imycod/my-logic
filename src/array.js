@@ -42,9 +42,9 @@ Array.prototype.findlastIndex = function (callback) {
   while (index < len) {
     ++index
     const value = callback(this[index], index)
-    if (value === undefined) {
-      return callback(this, index)
-    }
+    // if (value === undefined) {
+    //   return callback(this, index)
+    // }
     if (!value) {
       return index - 1
     }
