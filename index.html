@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script type="module" src="./index.js"></script> -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js"></script>
+</head>
+
+<body>
+  <script>
+    function is(value) {
+      return Object.prototype.toString.call(value).match(/\[object (.*?)\]/)[1].toLowerCase();
+    }
+    const dataType = (value) => {
+      return Object.prototype.toString.call(value).replace('[object ', '').replace(']', '') + '';
+    }
+    const useEmptyObject = (obj) => {
+      if (dataType(obj) === 'Object') {
+        let flag = !(Object.getOwnPropertyNames(obj).length > 0 || Object.getOwnPropertySymbols(obj).length > 0)
+        let names = [...Object.getOwnPropertyNames(obj), ...Object.getOwnPropertySymbols(obj)]
+        return {
+          flag,
+          names,
+          len: names.length
+        }
+      } else {
+        return {
+          flag: true,
+          names: [],
+          len: 0
+        }
+      }
+    }
+    const usefindNullValueByObject = function (params, ...ignore) {
+      let flag = true;
+      let whereKey = {};
+      if (is(params) !== 'object') return
+      if (is(params) === 'object') handleObject()
+      debugger
+      function handleObject() {
+        for (let key in params) {
+          if (is(key) === 'object') {
+            if (!useEmptyObject(params[key]).flag) {
+              return usefindNullValueByObject(params[key])
+            }
+          } else {
+            if (ignore.includes(key)) continue
+            if (useEmptyObject(params[key]).flag) {
+              flag = false;
+              whereKey[key] = true;
+            } else if (params[key] !== '0' && !params[key]) {
+              flag = false;
+              whereKey[key] = true;
+            }
+          }
+        }
+      }
+      return {
+        flag,
+        whereKey
+      };
+    };
+    usefindNullValueByObject({
+      name: '11',
+      age: '',
+      a: {
+        d: {
+          aaaa: {}
+        }
+      },
+      b: undefined,
+      c: null
+    })
+  </script>
+</body>
+
+</html>
