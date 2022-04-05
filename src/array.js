@@ -55,3 +55,22 @@ const index = arr3.findlastIndex(function (item, index) {
   return item <= 8
 })
 console.log("index", index);
+
+// array to tree
+export function arrayToTree(arr) {
+  const tree = [];
+  const map = {};
+  for (let i = 0; i < arr.length; i++) {
+    const node = arr[i];
+    node.children = [];
+    map[node.id] = node;
+    // console.log("map[node.id]",map[node.id]);
+    // console.log("node",node);
+    if (node.parentId) {
+      map[node.parentId].children.push(node);
+    } else {
+      tree.push(node);
+    }
+  }
+  return tree;
+}
