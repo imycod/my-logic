@@ -78,3 +78,9 @@ export function GeneratorRun(gen) {
   }
   next()
 }
+
+// 获取对应颜色
+export function useColorMapById(colors, id) {
+  return { backgroundColor: colors[Number(id) % colors.length] }
+}
+

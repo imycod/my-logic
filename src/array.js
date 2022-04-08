@@ -56,6 +56,12 @@ const index = arr3.findlastIndex(function (item, index) {
 })
 console.log("index", index);
 
+let arras = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(arras.findlastIndex(function (num) {
+  return num <= 3
+}));
+
+
 // array to tree
 export function arrayToTree(arr) {
   const tree = [];
