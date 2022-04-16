@@ -84,3 +84,7 @@ export function useColorMapById(colors, id) {
   return { backgroundColor: colors[Number(id) % colors.length] }
 }
 
+export function duplicateRemoval(array) {
+  return Array.from(new Set(array))
+}
+
